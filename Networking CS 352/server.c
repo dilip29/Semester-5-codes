@@ -1,32 +1,31 @@
-#include <stdio.h> // standard input and output library
-#include <stdlib.h> // this includes functions regarding memory allocation
-#include <string.h> // contains string functions
-#include <errno.h> //It defines macros for reporting and retrieving error conditions through error codes
-#include <time.h> //contains various functions for manipulating date and time
-#include <unistd.h> //contains various constants
-#include <sys/types.h> //contains a number of basic derived types that should be used whenever appropriate
-#include <arpa/inet.h> // defines in_addr structure
-#include <sys/socket.h> // for socket creation
-#include <netinet/in.h> //contains constants and structures needed for internet domain addresses
+#include <stdio.h> 
+#include <stdlib.h> 
+#include <string.h> 
+#include <errno.h> 
+#include <time.h> 
+#include <unistd.h> 
+#include <arpa/inet.h> 
+#include <sys/socket.h>
+#include <netinet/in.h>
  
 int main()
 {
     time_t clock;
-    char dataSending[1025],sample[1024]; // Actually this is called packet in Network Communication, which contain data and send through.
+    char dataSending[1025],sample[1024]; 
     int clintListn = 0, clintConnt = 0;
     struct sockaddr_in ipOfServer;
-    clintListn = socket(AF_INET, SOCK_STREAM, 0); // creating socket
+    clintListn = socket(AF_INET, SOCK_STREAM, 0); 
     memset(&ipOfServer, '0', sizeof(ipOfServer));
     memset(dataSending, '0', sizeof(dataSending));
     ipOfServer.sin_family = AF_INET;
     ipOfServer.sin_addr.s_addr = htonl(INADDR_ANY);
-    ipOfServer.sin_port = htons(2017);         // this is the port number of running server
+    ipOfServer.sin_port = htons(2017);         
     bind(clintListn, (struct sockaddr*)&ipOfServer , sizeof(ipOfServer));
     listen(clintListn , 5);
 
     while(1)
     {
-        printf("\n\nHi,Iam running server.Some Client hit me fast \n"); // whenever a request from client came. It will be processed here.
+        printf("\n\nHi,Iam running server.Some Client hit me fast \n");
         clintConnt = accept(clintListn, (struct sockaddr*)NULL, NULL);
  
         clock = time(NULL);
@@ -34,7 +33,7 @@ int main()
         //printf("enter your message!!!\n");
         //scanf("%s",sample);
         snprintf(dataSending, sizeof(dataSending), "%s\n", "Hello server its client speaking"); 
-        //snprintf(dataSending, sizeof(dataSending), "%.24s\r\n", ctime(&clock)); // Printing successful message
+ 
         write(clintConnt, dataSending, strlen(dataSending));
  
         close(clintConnt);

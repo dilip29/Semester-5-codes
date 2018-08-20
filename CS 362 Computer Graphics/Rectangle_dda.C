@@ -1,8 +1,9 @@
+
 #include <graphics.h>
 #include <stdio.h>
 #include <math.h>
 #include <dos.h>
-float minx,miny;
+float minx,miny,maxx,maxy;
 float dist(float x1,float x2,float y1,float y2)
 {
 float dist;
@@ -32,21 +33,41 @@ else
 
 
  }
- void linedraw(float x1,float y1,float x2,float y2)
+
+
+ void maxi(float x1,float y1,float x2,float y2)
+ {
+if (x1<x2)
+    maxx=x2,maxy=y2;
+else if(x1==x2)
+    {
+
+    if(y1<y2)
+    maxx=x2,maxy=y2;
+    else
+    maxx=x1,maxy=y1;
+    }
+else
+    maxx=x1,maxy=y1;
+
+
+ }
+
+  void linedraw(float x1,float y1,float x2,float y2)
  {
      float x,y;
      int i,step;
      float dx,dy;
-    dx=abs(x2-x1);
-    dy=abs(y2-y1);
+    dx=(x2-x1);
+    dy=(y2-y1);
 
-    if(dx>=dy)
-	step=dx;
+    if(abs(dx)>=abs(dy))
+	step=abs(dx);
     else
-	step=dy;
+	step=abs(dy);
 
-    dx=dx/step;
-    dy=dy/step;
+    dx=dx/(step);
+    dy=dy/(step);
 
     x=x1;
     y=y1;
@@ -63,6 +84,7 @@ else
 
 
 }
+
 
 void main( )
 {
@@ -84,7 +106,14 @@ void main( )
     mini(minx,miny,x2,y2);
     mini(minx,miny,x3,y3);
     mini(minx,miny,x4,y4);
-    //printf("%f%f",minx,miny);
+
+       maxx=x1,maxy=y1;
+    maxi(maxx,maxy,x2,y2);
+    maxi(maxx,maxy,x3,y3);
+    maxi(maxx,maxy,x4,y4);
+
+    printf("%f%f\n",minx,miny);
+    printf("%f%f",maxx,maxy);
 
 
 /*
@@ -97,22 +126,23 @@ void main( )
     //x1=minx,y1=miny;
     if(minx==x1 && miny==y1 )
     {
+        /*
     a=dist(x1,x2,y1,y2);
     b=dist(x1,x3,y1,y3);
     c=dist(x1,x4,y1,y4);
-
+*/
     //draw(a,b,c);
-	    if(a>=b && a>=c)
+	    if(maxx==x2 && maxy==y2)
 	    {
 
-	       //	printf("saregamapa");
+	       	//printf("oooooooooooo");
 	       linedraw(x1,y1,x3,y3);
 		linedraw(x1,y1,x4,y4);
 		linedraw(x4,y4,x2,y2);
 		linedraw(x3,y3,x2,y2);
 	    }
 
-	    else if(b>=a && b>=c)
+	    else if(maxx==x3 && maxy==y3)
 	    {
 	       //printf("saregamapa");
 		linedraw(x1,y1,x2,y2);
@@ -123,7 +153,7 @@ void main( )
 
 	    else
 	    {
-	       // printf("saregamapa");
+	       printf("saregamapa");
 		    linedraw(x1,y1,x2,y2);
 		linedraw(x1,y1,x3,y3);
 		linedraw(x3,y3,x4,y4);
@@ -134,12 +164,13 @@ void main( )
 
     else if(minx==x2 && miny==y2)
     {
+    /*
     a=dist(x2,x1,y2,y1);
     b=dist(x2,x3,y2,y3);
     c=dist(x2,x4,y2,y4);
 
-      //draw(a,b,c)
-	  if(a>=b && a>=c)
+    */  //draw(a,b,c)
+	  if(maxx==x1 && maxy==y1)
 	    {
 
 		//printf("saregamapa");
@@ -149,7 +180,7 @@ void main( )
 		linedraw(x3,y3,x1,y1);
 	    }
 
-	    else if(b>=a && b>=c)
+	    else if(maxx==x3 && maxy==y3)
 	    {
 
 	       //	printf("ooooopsss");
@@ -175,12 +206,13 @@ void main( )
 
     else if(minx==x3 && miny==y3)
     {
+	/*
 	 a=dist(x3,x1,y3,y1);
     b=dist(x3,x2,y3,y2);
     c=dist(x3,x4,y3,y4);
 	//draw(a,b,c);
-
-		if(a>=b && a>=c)
+*/
+		if(maxx==x1 && maxy==y1)
 	    {
 		//printf("saregamapa");
 	       linedraw(x3,y3,x2,y2);
@@ -189,7 +221,7 @@ void main( )
 		linedraw(x4,y4,x1,y1);
 	    }
 
-	    else if(b>=a && b>=c)
+	    else if(maxx==x2 && maxy==y2)
 	    {
 		//printf("saregamapa");
 		linedraw(x3,y3,x1,y1);
@@ -215,12 +247,14 @@ void main( )
 
     else
 	    {
-
+/*
     a=dist(x4,x1,y4,y1);
     b=dist(x4,x2,y4,y2);
     c=dist(x4,x3,y4,y3);
 
-		if(a>=b && a>=c)
+		*/
+
+		if(maxx==x1 && maxy==y1)
 		{
 		   // printf("saregamapa");
 		   linedraw(x4,y4,x2,y2);
@@ -229,7 +263,7 @@ void main( )
 		    linedraw(x2,y2,x1,y1);
 		}
 
-		else if(b>=a && b>=c)
+		else if(maxx==x2 && maxy==y2)
 		{
 
 		    //printf("saregamapa");
