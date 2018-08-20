@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <dos.h>
-float minx,miny,maxx,maxy;
+int minx,miny,maxx,maxy;
 float dist(float x1,float x2,float y1,float y2)
 {
 float dist;
@@ -17,7 +17,7 @@ return dist;
 
 
 
- void mini(float x1,float y1,float x2,float y2)
+ void mini(int x1,int y1,int x2,int y2)
  {
 if (x1<x2)
     minx=x1,miny=y1;
@@ -36,7 +36,7 @@ else
  }
 
 
- void maxi(float x1,float y1,float x2,float y2)
+ void maxi(int x1,int y1,int x2,int y2)
  {
 if (x1<x2)
     maxx=x2,maxy=y2;
@@ -55,52 +55,231 @@ else
  }
 
 
-void linedraw(float x1,float y1,float x2,float y2)
+void linedraw(int x1,int y1,int x2,int y2)
  {
-     float x,y,p,end;
-     float i,step;
-     float dx,dy;
+	float m;
+     int x,y,p,end;
+     int i,step;
+     int dx,dy;
     dx=(x2-x1);
     dy=(y2-y1);
 
-    p=2*dy-dx;
+    if(dx!=0)
+       {
 
-    if(x1<x2)
+        m=dy/(1.0*dx);
+       printf("value of m= %f",m);
+       }
+
+
+    if (dx==0)
+    {
+            x=x1;
+            if (y1<y2)
+            {
+               y=y1;
+               end=y2;
+            }
+            else
+                {
+                    y=y2;
+                    end=y1;
+                }
+
+            while(y<end)
+            {
+                putpixel(x,y,5);
+                delay(30);
+                y++;
+            }
+            //return;
+    }
+
+     else if(dy==0)
+    {
+                  y=y1;
+            if (x1<x2)
+            {
+               x=x1;
+               end=x2;
+            }
+            else
+            {
+                x=x2;
+                end=x1;
+            }
+
+            while(x<end)
+            {
+                putpixel(x,y,5);
+                delay(30);
+                x++;
+            }
+            //return;
+    }
+
+
+
+     //printf("%f",m);
+
+
+
+    else if (abs(m)<1.0)
     {
 
-    x=x1;
-    end=x2;
-    y=y1;
+        p=2*dy-dx;
+
+	    if(x1<x2)
+		{
+
+		x=x1;
+		end=x2;
+		y=y1;
+		}
+		else
+		{
+		x=x2;
+		end=x1;
+		y=y2;
+		}
+
+
+		while(x<end)
+		{
+		if(p>=0)
+		{
+
+
+		p=p+2*dy-2*dx;
+		putpixel(x,y,5);
+		delay(30);
+		y=y+1;
+		}
+		else
+		{
+
+
+		p=p+2*dy;
+		putpixel(x,y,5);
+		delay(30);
+		}
+
+		x=x+1;
+		}
+
+
     }
+
+    else if((m)>1.0)
+    {
+
+        printf("4th line");
+	    p=2*dx-dy;
+
+	    if(y1<y2)
+	    {
+
+	    y=y1;
+	    end=y2;
+	    x=x1;
+	    }
+	    else
+	    {
+	    y=y2;
+	    end=y1;
+	    x=x2;
+	    }
+
+
+	    while(y<end)
+	    {
+	    if(p>=0)
+	    {
+
+	    p=p+2*dx-2*dy;
+	    putpixel(x,y,5);
+	    delay(30);
+        x=x+1;
+
+	    }
+	    else
+	    {
+
+
+	    p=p+2*dx;
+	    putpixel(x,y,5);
+	    delay(30);
+
+	    }
+
+	    y=y+1;
+	    }
+
+
+    }
+
+
+     else if (m==-1.0)
+    {
+printf("3rd line");
+	if(x1<x2)
+		{
+
+		x=x1;
+		end=x2;
+		y=y1;
+		}
+		else
+		{
+		x=x2;
+		end=x1;
+		y=y2;
+		}
+
+
+		while(x<end)
+		{
+		    putpixel(x,y,5);
+		    delay(30);
+		    x++;
+		    y--;
+		}
+
+    }
+
+
+
     else
+
     {
-	x=x2;
-	end=x1;
-	y=y2;
+
+	if(x1<x2)
+		{
+
+		x=x1;
+		end=x2;
+		y=y1;
+		}
+		else
+		{
+		x=x2;
+		end=x1;
+		y=y2;
+		}
+
+
+		while(x<end)
+		{
+		    putpixel(x,y,5);
+		    delay(30);
+		    x++;
+		    y++;
+		}
+
     }
 
 
-    while(x<end)
-    {
-    if(p>=0)
-    {
 
-	y=y+1;
-	p=p+2*dy-2*dx;
-	putpixel(x,y,5);
-	delay(30);
-    }
-    else
-    {
-
-
-	p=p+2*dy;
-	putpixel(x,y,5);
-	delay(30);
-    }
-
-    x=x+1;
-    }
 
 
 }
@@ -108,21 +287,23 @@ void linedraw(float x1,float y1,float x2,float y2)
 
 
 
+
+
 void main( )
 {
-    float x,y,x1,y1,x2,y2,x3,y3,x4,y4,dx,dy,step;
+    int x,y,x1,y1,x2,y2,x3,y3,x4,y4,dx,dy,step;
     int i,gd=DETECT,gm;
 
     initgraph(&gd,&gm,"C:\\TURBOC3\\BGI");
 
     printf("Enter the value of x1 and y1 : ");
-    scanf("%f%f",&x1,&y1);
+    scanf("%d%d",&x1,&y1);
     printf("Enter the value of x2 and y2: ");
-    scanf("%f%f",&x2,&y2);
+    scanf("%d%d",&x2,&y2);
     printf("Enter the value of x3 and y3 : ");
-    scanf("%f%f",&x3,&y3);
+    scanf("%d%d",&x3,&y3);
     printf("Enter the value of x4 and y4: ");
-    scanf("%f%f",&x4,&y4);
+    scanf("%d%d",&x4,&y4);
 
     minx=x1,miny=y1;
     mini(minx,miny,x2,y2);
@@ -134,8 +315,8 @@ void main( )
     maxi(maxx,maxy,x3,y3);
     maxi(maxx,maxy,x4,y4);
 
-    printf("%f%f\n",minx,miny);
-    printf("%f%f",maxx,maxy);
+    printf("%d%d\n",minx,miny);
+    printf("%d%d",maxx,maxy);
 
 
 /*
