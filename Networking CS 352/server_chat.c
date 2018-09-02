@@ -8,7 +8,7 @@
 int main()
 {
  
- 
+
     char ch[1024];
     char ch1[1024];
     //char ch2[]="wrong input";

@@ -46,7 +46,7 @@ int main()
         else 
         {
             exit(1);
-           
+    
         }
     }
     //close(sock);
