@@ -3,32 +3,57 @@
 //#define PI 3.141
 
 using namespace std;
-int l=500,b=500;
-int mat[500][500]={0};
+int l=200,b=200;
+int mat[200][200]={0};
 
-void ellipse(int xc,int yc,int rx,int ry , float theta)
+void ellipse(int xc,int yc,int rx,int ry , double theta)
 {
    // printf("reached");
 float p1,p2;
 int x,y,xf,yf;
 x=0;
 y=ry;
-xf=xc-rx;
-yf=yc;
+xf=0;
+yf=0;
+int x_shifted,y_shifted,m;
 
 //region 1 
 p1=(float)((rx*rx)/4) + (ry*ry) -(rx*rx*ry);
 
+m=0;
+while(m<l)
+{
+mat[104][m ]=255;
+mat[m][104]=255;
+m=m+10;
+}
+
+
 while((x*ry*ry) <= (y*rx*rx))
 {   
-    x=xf + (x- xf)*cos(theta) - (y-yf)*sin(theta);
-    y=yf + (x- xf)*sin(theta) + (y-yf)*cos(theta);
+    x_shifted=x*cos(theta) - y*sin(theta);
 
-    mat[yc-y][xc+x]=255;
-    mat[yc+y][xc+x]=255;
+   // cout<<y_shifted<<"  ";
+   // cout<<"ffhifr";
+    y_shifted= x*sin(theta) + y*cos(theta);
 
-    mat[yc-y][xc-x]=255;
-    mat[yc+y][xc-x]=255;
+    
+    cout<<x_shifted<<" ,";
+    cout<<y_shifted<<"  \n";
+   // cout<<"ffhifr";
+   //cout<<xc-x<<" ";
+   // 1. mat[yc-y_shifted][x_shifted + xc]=255;
+    //mat[yc-y_shifted][x_shifted - xc]=255;
+    //mat[yc+y_shifted][x_shifted + xc]=255;
+    //mat[yc+y_shifted][x_shifted - xc]=255;
+  // mat[yc+y][xc+x]=255;
+
+
+     mat[yc-y_shifted][xc + x_shifted]=255;
+    mat[yc+y_shifted][xc-x_shifted]=255;
+    mat[yc+y_shifted][xc+x_shifted]=255;
+    mat[yc-y_shifted][xc-x_shifted]=255;
+   // mat[yc+y_shifted][xc-x_shifted]=255;
 
     x++;
     if (p1<0)
@@ -53,15 +78,27 @@ p2= (float)((ry*ry) * (x+0.5)*(x+0.5)) + (rx*rx) * ((y-1)*(y-1)) - (ry*ry*rx*rx)
 
 while(y>=0)
 {
-       x=xf + (x- xf)*cos(theta) - (y-yf)*sin(theta);
-    y=yf + (x- xf)*sin(theta) + (y-yf)*cos(theta);
+     //  x=xf + (x- xf)*cos(theta) - (y-yf)*sin(theta);
+   // y=yf + (x- xf)*sin(theta) + (y-yf)*cos(theta);
+    x_shifted= x*cos(theta) - y*sin(theta);
 
+    //cout<<x<<"  ";
+   // cout<<"ffhifr";
+    y_shifted= (x)*sin(theta) + (y*cos(theta));
 
-    mat[yc-y][xc+x]=255;
-    mat[yc+y][xc+x]=255;
+     cout<<x_shifted<<" ,";
+     cout<<y_shifted<<" \n ";
+  
+       mat[yc-y_shifted][xc - x_shifted]=255;
+     mat[yc-y_shifted][xc + x_shifted]=255;
+   // mat[yc-y_shifted][x_shifted - xc]=255;
+    // mat[yc+y_shifted][x_shifted + xc]=255;
+   // mat[yc+y_shifted][x_shifted - xc]=255;
 
-    mat[yc-y][xc-x]=255;
-    mat[yc+y][xc-x]=255;
+   // mat[yc+y][xc+x]=255;
+
+    mat[yc+y_shifted][xc-x_shifted]=255;
+   mat[yc+y_shifted][xc+x_shifted]=255;
 
     y--;
     if (p2<0)
@@ -76,15 +113,13 @@ while(y>=0)
     }
 }
 
-
-
 }
 
 int  main( )
 {
    // cout<<"dddd";
-    int xc=250,yc=250,rx=100,ry=50;
-    float theta=60.0;
+    int xc=100,yc=100,rx=30,ry=10;
+    double theta=60.0;
 
     /*
     cout<<"enter xc\n";
