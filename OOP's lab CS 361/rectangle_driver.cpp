@@ -1,5 +1,5 @@
 #include<iostream>
-#include "rect_class.cpp"
+#include "rectangle_class.cpp"
 #include<cmath>
 using namespace std;
 
