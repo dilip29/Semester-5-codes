@@ -1,5 +1,5 @@
 #include<iostream>
-#include "time_class.cpp"
+#include "time_tick_class.cpp"
 using namespace std;
 
 int main()
