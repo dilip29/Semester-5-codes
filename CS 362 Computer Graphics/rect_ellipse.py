@@ -17,7 +17,7 @@ def ellipse(xc, yc, rx, ry):
     p1 = float(((rx*rx)/4) + (ry*ry) - (rx*rx*ry))
     while(x*ry*ry) <= (y*rx*rx):
 
-        mat[yc-y][xc+x + ] = 255
+        mat[yc-y][xc+x  ] = 255
         mat[yc - y][xc - x] = 255
         mat[yc + y][xc + x] = 255
         mat[yc + y][xc - x] = 255
