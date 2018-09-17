@@ -4,15 +4,10 @@ mat = [[0 for x in range(l)]for y in range(h)]
 
 xc = int(input("enter the xc"))
 yc = int(input("enter the yc"))
-ry, rx, a, b =  20, 10, 100, 80
+ry, rx, a, b ,shx=  20, 10, 100, 80,0.5
 
-shx=0.5
-i=0
-
-
-while i<500:
+for i in range(500):
     mat[yc+50][i]=255
-    i=i+1
 
 for i in(range(2*ry)):
     mat[yc-ry+i][xc-int(a/2)-int(shx*i)] = 255
