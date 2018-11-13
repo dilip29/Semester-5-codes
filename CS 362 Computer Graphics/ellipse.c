@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <math.h>
 int l=500,b=500;
 int mat[500][500]={0};
 
