@@ -1,9 +1,8 @@
 
-#include <graphics.h>
 #include <stdio.h>
 #include <math.h>
-#include <dos.h>
-
+int l=500,b=500;
+int mat[500][500]={0};
 void linedraw_bres(int x1,int y1,int x2,int y2)
  {
 	float m;
@@ -28,9 +27,10 @@ void linedraw_bres(int x1,int y1,int x2,int y2)
 
 	while(y<end)
 	{
-	    putpixel(x,y,5);
-	    delay(30);
-	    y++;
+	    //putpixel(x,y,5);
+	    //delay(30);
+	    	mat[(int)y][(int)x]=255;
+		y++;
 	}
 	return;
     }
@@ -51,16 +51,17 @@ void linedraw_bres(int x1,int y1,int x2,int y2)
 
 	while(x<end)
 	{
-	    putpixel(x,y,5);
-	    delay(30);
-	    x++;
+	    //putpixel(x,y,5);
+	    //delay(30);
+	    	mat[(int)y][(int)x]=255;
+		x++;
 	}
 	return;
     }
 
 
      m=dy/(1.0*dx);
-     printf("%f",m);
+    // printf("%f",m);
 
 
 
@@ -91,16 +92,18 @@ void linedraw_bres(int x1,int y1,int x2,int y2)
 
 		y=y+1;
 		p=p+2*dy-2*dx;
-		putpixel(x,y,5);
-		delay(30);
+		//putpixel(x,y,5);
+		//delay(30);
+			mat[(int)y][(int)x]=255;
 		}
 		else
 		{
 
 
 		p=p+2*dy;
-		putpixel(x,y,5);
-		delay(30);
+		//putpixel(x,y,5);
+			mat[(int)y][(int)x]=255;
+		//delay(30);
 		}
 
 		x=x+1;
@@ -137,16 +140,18 @@ void linedraw_bres(int x1,int y1,int x2,int y2)
 
 	    x=x+1;
 	    p=p+2*dy-2*dx;
-	    putpixel(x,y,5);
-	    delay(30);
-	    }
+	    //putpixel(x,y,5);
+	    //delay(30);
+	    	mat[(int)y][(int)x]=255;
+		}
 	    else
 	    {
 
 
 	    p=p+2*dy;
-	    putpixel(x,y,5);
-	    delay(30);
+	    //putpixel(x,y,5);
+	    	mat[(int)y][(int)x]=255;
+		//delay(30);
 	    }
 
 	    y=y+1;
@@ -176,9 +181,10 @@ void linedraw_bres(int x1,int y1,int x2,int y2)
 
 		while(x<end)
 		{
-		    putpixel(x,y,5);
-		    delay(30);
-		    x++;
+		    //putpixel(x,y,5);
+		    //delay(30);
+		    	mat[(int)y][(int)x]=255;
+			x++;
 		    y--;
 		}
 
@@ -207,8 +213,9 @@ void linedraw_bres(int x1,int y1,int x2,int y2)
 
 		while(x<end)
 		{
-		    putpixel(x,y,5);
-		    delay(30);
+		    //putpixel(x,y,5);
+				mat[(int)y][(int)x]=255;
+		    //delay(30);
 		    x++;
 		    y++;
 		}
@@ -246,22 +253,23 @@ void linedraw_bres(int x1,int y1,int x2,int y2)
     i=1;
     while(i<=step)
     {
-	putpixel(x,y,5);
+	//putpixel(x,y,5);
+	mat[(int)y][(int)x]=255;
 	x=(x+dx);
 	y=(y+dy);
 	i=i+1;
-	delay(30);
+	//delay(30);
     }
 
 
 }
 
-void main( )
+int main( )
 {
     int x,y,x1,y1,x2,y2,dx,dy,step;
-    int i,gd=DETECT,gm;
+   // int i,gd=DETECT,gm;
 
-    initgraph(&gd,&gm,"C:\\TURBOC3\\BGI");
+    //initgraph(&gd,&gm,"C:\\TURBOC3\\BGI");
 
     printf("Enter the value of x1 and y1 : ");
     scanf("%d%d",&x1,&y1);
@@ -270,7 +278,29 @@ void main( )
 
     linedraw_bres(x1,y1,x2,y2);
 
-    closegraph();
+	  FILE* ellipseimg;
+    ellipseimg=fopen("ellipseimg.pgm","wb");
+
+    fprintf(ellipseimg,"P2\n");
+    fprintf(ellipseimg,"%d %d\n",l,b);
+    fprintf(ellipseimg,"255\n");
+
+    int i,j,temp;
+    for(i=0;i<l;i++)
+    {
+        for(j=0;j<b;j++)
+        {
+           temp=mat[i][j];
+           fprintf(ellipseimg,"%d ",temp);
+        }
+        fprintf(ellipseimg,"\n");
+    }
+
+    fclose(ellipseimg);
+
+    //closegraph();
+
+	return 0;
 
 }
 
